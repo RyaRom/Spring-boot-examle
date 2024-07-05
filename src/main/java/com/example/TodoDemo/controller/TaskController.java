@@ -32,6 +32,10 @@ public class TaskController {
     public ResponseEntity<List<Step>> getSteps(@PathVariable Long taskId){
         return ResponseEntity.ok(taskService.getSteps(taskId));
     }
+    @GetMapping("/completed")
+    public ResponseEntity<List<Task>> getCompletedTasks(){
+        return ResponseEntity.ok(taskService.getCompletedTasks());
+    }
 
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task){

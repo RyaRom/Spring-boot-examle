@@ -23,6 +23,9 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
+    public List<Task> getCompletedTasks(){
+        return taskRepository.findTasksByCompleted(true);
+    }
     public Optional<Task> getTaskById(Long id) {
         return taskRepository.findById(id);
     }
