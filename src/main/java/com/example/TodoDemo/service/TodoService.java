@@ -1,7 +1,7 @@
 package com.example.TodoDemo.service;
 
 
-import com.example.TodoDemo.model.Todo;
+import com.example.TodoDemo.model.Task;
 import com.example.TodoDemo.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +15,16 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public List<Todo> getAllTodos() {
+    public List<Task> getAllTasks() {
         return todoRepository.findAll();
     }
-    public Optional<Todo> getTodoById(Long id) {
+    public Optional<Task> getTaskById(Long id) {
         return todoRepository.findById(id);
     }
-    public Todo createOrUpdateTodo(Todo todo) {
-        return todoRepository.save(todo);
+    public Task createOrUpdateTask(Task task) {
+        return todoRepository.save(task);
     }
-    public void deleteTodoById(Long id) {
+    public void deleteTaskById(Long id) {
         todoRepository.deleteById(id);
     }
 }
