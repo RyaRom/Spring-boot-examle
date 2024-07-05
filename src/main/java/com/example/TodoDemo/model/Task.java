@@ -1,5 +1,6 @@
 package com.example.TodoDemo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class Task {
     private String description;
     private boolean completed;
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Step> steps;
 
     public Task(){}
@@ -23,6 +25,14 @@ public class Task {
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.steps = steps;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 

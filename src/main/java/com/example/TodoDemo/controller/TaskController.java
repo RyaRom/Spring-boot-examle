@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/todos")
+@RequestMapping("/api/todo")
 public class TaskController {
 
     @Autowired
