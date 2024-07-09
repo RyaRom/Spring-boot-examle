@@ -13,9 +13,29 @@
     </form>
     <ul>
        <li th:each = "task : ${tasks}">
-           <span th:text = "${task.getTitle()} + ': ' + ${task.getDescription()} + ': '"></span>
+           <span th:text = "'Id   : '+${task.getId()}+ '    Title : ' + ${task.getTitle()} + '    Description : ' + ${task.getDescription()} + '     Status : '"></span>
            <span th:if = "${task.isCompleted()}"> Completed</span>
            <span th:unless = "${task.isCompleted()}"> In progress</span>
+           <h4> additional steps:</h4>
+           <form id = "add-steps-form" th:action = "@{'/tasks/' + ${task.id} + '/steps'}" method="post">
+               <label for="step_title">Step title:</label><input id ="step_title" name="step_title" placeholder="Your step title" required>
+               <button type="submit">Add a new step</button>
+           </form>
+           <ul>
+               <li th:each = "step : ${task.getSteps()}">
+                   <span th:text = "'Id : ' + ${step.getId()} + '      Title : ' + ${step.getTitle()} + '    Status : '"></span>
+                   <span th:if = "${step.isCompleted()}"> Completed</span>
+                   <span th:unless = "${step.isCompleted()}"> In progress</span>
+               </li>
+           </ul>
+           <form id = "complete-task-form" th:action = "@{'/tasks/' +${task.id} + '/complete'}" method="post" style="display:inline">
+               <label for="complete-task-form">Complete task</label> <input type="hidden" name="_method" value="post" style="display:inline">
+               <button type="submit">complete</button>
+           </form>
+           <form id = "delete-task-form" th:action = "@{'/tasks/' + ${task.id}}" method="post" style="display:inline">
+               <label for="delete-task-form">Delete task</label> <input type="hidden" name="_method" value="delete">
+               <button type="submit">delete</button>
+           </form>
        </li>
     </ul>
 </body>

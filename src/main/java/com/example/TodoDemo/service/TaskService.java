@@ -7,6 +7,7 @@ import com.example.TodoDemo.repository.StepRepository;
 import com.example.TodoDemo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +47,10 @@ public class TaskService {
         Optional<Step> step = stepRepository.findById(stepId);
         if (task.isEmpty() || step.isEmpty()) return;
         stepRepository.deleteById(stepId);
+    }
+    public void completeTask(Long taskId){
+        Task task = getTaskById(taskId).get();
+        task.setCompleted(true);
+        taskRepository.save(task);
     }
 }

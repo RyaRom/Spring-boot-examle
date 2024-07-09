@@ -4,22 +4,20 @@ import com.example.TodoDemo.model.Step;
 import com.example.TodoDemo.model.Task;
 import com.example.TodoDemo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.Console;
 
 @Controller
+@RequestMapping(method = RequestMethod.POST)
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
-    @GetMapping
+    @GetMapping(path = "/")
     public String getAllTasks(Model model){
         model.addAttribute("tasks", taskService.getAllTasks());
         return "MainPage";
@@ -32,8 +30,9 @@ public class TaskController {
     }
 
     @GetMapping("/{taskId}/steps")
-    public ResponseEntity<List<Step>> getSteps(@PathVariable Long taskId){
-        return ResponseEntity.ok(taskService.getSteps(taskId));
+    public String getSteps(@PathVariable Long taskId, Model model){
+        model.addAttribute("steps", taskService.getSteps(taskId));
+        return "redirect:/";
     }
 
     @PostMapping("/tasks")
@@ -42,28 +41,35 @@ public class TaskController {
         return "redirect:/";
     }
 
-    @PostMapping("/{taskId}/steps")
-    public ResponseEntity<Step> addStep(@PathVariable Long taskId, @RequestBody Step step){
-        return new ResponseEntity<>(taskService.createOrUpdateStep(taskId, step), HttpStatus.CREATED);
+    @PostMapping("/tasks/{taskId}/steps")
+    public String addStep(@PathVariable Long taskId, @RequestParam String step_title){
+        taskService.createOrUpdateStep(taskId, new Step(step_title));
+        return "redirect:/";
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/tasks/{taskId}/complete")
+    public String completeTask(@PathVariable Long taskId){
+        taskService.completeTask(taskId);
+        return "redirect:/";
+    }
+
+    /*@PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task){
         Optional<Task> existing = taskService.getTaskById(id);
         if (existing.isEmpty()) return ResponseEntity.notFound().build();
         task.setId(id);
         return ResponseEntity.ok(taskService.createOrUpdateTask(task));
-    }
+    }*/
 
     @DeleteMapping("/{taskId}/steps/{stepId}")
-    public ResponseEntity<Void> deleteStep(@PathVariable Long taskId, @PathVariable Long stepId){
+    public String deleteStep(@PathVariable Long taskId, @PathVariable Long stepId){
         taskService.deleteStep(taskId, stepId);
-        return ResponseEntity.noContent().build();
+        return "redirect:/";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id){
+    @DeleteMapping("/tasks/{id}")
+    public String deleteTaskById(@PathVariable Long id){
         taskService.deleteTaskById(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/";
     }
 }

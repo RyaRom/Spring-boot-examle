@@ -16,6 +16,14 @@ public class Step {
     @JsonBackReference
     private Task task;
 
+    public Step() {
+    }
+
+    public Step(String title) {
+        this.title = title;
+        completed = false;
+    }
+
     public Long getId() {
         return id;
     }
