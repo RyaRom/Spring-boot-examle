@@ -23,9 +23,6 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
-    public List<Task> getCompletedTasks(){
-        return taskRepository.findTasksByCompleted(true);
-    }
     public Optional<Task> getTaskById(Long id) {
         return taskRepository.findById(id);
     }
@@ -35,7 +32,7 @@ public class TaskService {
     public void deleteTaskById(Long id) {
         taskRepository.deleteById(id);
     }
-    public Step addStep(Long taskId, Step step){
+    public Step createOrUpdateStep(Long taskId, Step step){
         Optional<Task> task = getTaskById(taskId);
         if (task.isEmpty())throw new RuntimeException("no task with this id");
         step.setTask(task.get());

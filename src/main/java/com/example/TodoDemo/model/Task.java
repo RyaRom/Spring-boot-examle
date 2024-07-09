@@ -3,6 +3,7 @@ package com.example.TodoDemo.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +21,14 @@ public class Task {
 
     public Task(){}
 
-    public Task(Long id, String title, String description, boolean completed, List<Step> steps) {
-        this.id = id;
+    public Task(String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.completed = false;
+        this.steps = new ArrayList<>();
+    }
+
+    public Task(String title, String description, boolean completed, List<Step> steps) {
         this.title = title;
         this.description = description;
         this.completed = completed;

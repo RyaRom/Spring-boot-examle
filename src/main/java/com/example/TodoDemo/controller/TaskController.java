@@ -6,45 +6,45 @@ import com.example.TodoDemo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/todo")
+@Controller
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks(){
-        return ResponseEntity.ok(taskService.getAllTasks());
+    public String getAllTasks(Model model){
+        model.addAttribute("tasks", taskService.getAllTasks());
+        return "MainPage";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id){
-        return taskService.getTaskById(id).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+    public String getTaskById(Model model, @PathVariable Long id){
+        model.addAttribute(taskService.getTaskById(id));
+        return "redirect:/";
     }
 
     @GetMapping("/{taskId}/steps")
     public ResponseEntity<List<Step>> getSteps(@PathVariable Long taskId){
         return ResponseEntity.ok(taskService.getSteps(taskId));
     }
-    @GetMapping("/completed")
-    public ResponseEntity<List<Task>> getCompletedTasks(){
-        return ResponseEntity.ok(taskService.getCompletedTasks());
-    }
 
-    @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
-        return new ResponseEntity<>(taskService.createOrUpdateTask(task), HttpStatus.CREATED);
+    @PostMapping("/tasks")
+    public String createTask(@RequestParam String title, @RequestParam String description){
+        taskService.createOrUpdateTask(new Task(title, description));
+        return "redirect:/";
     }
 
     @PostMapping("/{taskId}/steps")
     public ResponseEntity<Step> addStep(@PathVariable Long taskId, @RequestBody Step step){
-        return new ResponseEntity<>(taskService.addStep(taskId, step), HttpStatus.CREATED);
+        return new ResponseEntity<>(taskService.createOrUpdateStep(taskId, step), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks CRUD</title>
+</head>
+<body>
+    <h1>Add a new task</h1>
+    <form id = "add-task-form" th:action = "@{/tasks}" method="post">
+        <label for="title">Task title:</label><input type="text" id ="title" name="title" placeholder="Your task title" required>
+        <label for="description">Description:</label><input type="text" id = "description" name = "description" placeholder="Description">
+        <button type="submit">Add a new task</button>
+    </form>
+    <ul>
+       <li th:each = "task : ${tasks}">
+           <span th:text = "${task.getTitle()} + ': ' + ${task.getDescription()} + ': '"></span>
+           <span th:if = "${task.isCompleted()}"> Completed</span>
+           <span th:unless = "${task.isCompleted()}"> In progress</span>
+       </li>
+    </ul>
+</body>
+</html>
