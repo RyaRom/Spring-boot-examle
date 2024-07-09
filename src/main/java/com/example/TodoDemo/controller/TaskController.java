@@ -53,6 +53,12 @@ public class TaskController {
         return "redirect:/";
     }
 
+    @PostMapping("/tasks/steps/{stepId}/complete")
+    public String completeStep(@PathVariable Long stepId){
+        taskService.completeStep(stepId);
+        return "redirect:/";
+    }
+
     /*@PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task){
         Optional<Task> existing = taskService.getTaskById(id);

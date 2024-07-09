@@ -53,4 +53,9 @@ public class TaskService {
         task.setCompleted(true);
         taskRepository.save(task);
     }
+    public void completeStep(Long stepId){
+        Step step = stepRepository.findById(stepId).get();
+        step.setCompleted(true);
+        stepRepository.save(step);
+    }
 }

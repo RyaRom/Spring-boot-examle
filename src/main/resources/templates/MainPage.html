@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/styles.css" type="text/css">
     <title>Tasks CRUD</title>
 </head>
 <body>
@@ -26,6 +27,10 @@
                    <span th:text = "'Id : ' + ${step.getId()} + '      Title : ' + ${step.getTitle()} + '    Status : '"></span>
                    <span th:if = "${step.isCompleted()}"> Completed</span>
                    <span th:unless = "${step.isCompleted()}"> In progress</span>
+                   <form id = "finish-step-form" th:action = "@{'/tasks/steps/' + ${step.id} + '/complete'}" method="post">
+                       <label for="finish-step-form">Complete step</label> <input type="hidden" name="_method" value="post" style="display:inline">
+                       <button type="submit">complete</button>
+                   </form>
                </li>
            </ul>
            <form id = "complete-task-form" th:action = "@{'/tasks/' +${task.id} + '/complete'}" method="post" style="display:inline">

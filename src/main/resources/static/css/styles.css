@@ -1,0 +1,9 @@
+body{
+    background-color:#ffb6d8;
+    background-image:url('/static/css/bestSiteEvar.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: repeat;
+    margin: 0;
+    padding: 0;
+}
