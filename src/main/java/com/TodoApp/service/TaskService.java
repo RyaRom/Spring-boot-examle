@@ -1,10 +1,10 @@
-package com.example.TodoDemo.service;
+package com.TodoApp.service;
 
 
-import com.example.TodoDemo.model.Step;
-import com.example.TodoDemo.model.Task;
-import com.example.TodoDemo.repository.StepRepository;
-import com.example.TodoDemo.repository.TaskRepository;
+import com.TodoApp.model.Task;
+import com.TodoApp.repository.TaskRepository;
+import com.TodoApp.model.Step;
+import com.TodoApp.repository.StepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

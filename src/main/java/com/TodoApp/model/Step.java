@@ -1,4 +1,4 @@
-package com.example.TodoDemo.model;
+package com.TodoApp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

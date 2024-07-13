@@ -1,8 +1,8 @@
-package com.example.TodoDemo.controller;
+package com.TodoApp.controller;
 
-import com.example.TodoDemo.model.Step;
-import com.example.TodoDemo.model.Task;
-import com.example.TodoDemo.service.TaskService;
+import com.TodoApp.model.Step;
+import com.TodoApp.model.Task;
+import com.TodoApp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

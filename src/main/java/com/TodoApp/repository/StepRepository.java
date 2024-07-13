@@ -1,6 +1,6 @@
-package com.example.TodoDemo.repository;
+package com.TodoApp.repository;
 
-import com.example.TodoDemo.model.Step;
+import com.TodoApp.model.Step;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
