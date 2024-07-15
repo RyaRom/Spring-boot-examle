@@ -14,6 +14,7 @@ public class User {
     private String username;
     private String password;
     private String role;
+    private boolean active;
 
     @OneToMany(mappedBy = "user")
     private Set<Task> tasks;
@@ -32,6 +33,14 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Set<Task> getTasks() {
