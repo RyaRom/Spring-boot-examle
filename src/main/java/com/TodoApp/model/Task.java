@@ -19,6 +19,10 @@ public class Task {
     @JsonManagedReference
     private List<Step> steps;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Task(){}
 
     @Override
@@ -32,6 +36,14 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Step> getSteps() {

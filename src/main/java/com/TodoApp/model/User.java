@@ -3,6 +3,7 @@ package com.TodoApp.model;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -13,6 +14,9 @@ public class User {
     private String username;
     private String password;
     private String role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Task> tasks;
 
     public User() {
     }
@@ -28,6 +32,14 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public Long getId() {
