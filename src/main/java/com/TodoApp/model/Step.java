@@ -3,6 +3,8 @@ package com.TodoApp.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Step {
     @Id
@@ -15,6 +17,19 @@ public class Step {
     @JoinColumn(name = "task_id")
     @JsonBackReference
     private Task task;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step step = (Step) o;
+        return Objects.equals(id, step.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
     public Long getId() {
         return id;
