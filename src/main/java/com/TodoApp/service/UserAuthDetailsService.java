@@ -1,6 +1,6 @@
 package com.TodoApp.service;
 
-import com.TodoApp.model.CustomUserDetails;
+import com.TodoApp.model.UserAuthDetails;
 import com.TodoApp.model.User;
 import com.TodoApp.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,9 +18,9 @@ public class UserAuthDetailsService implements UserDetailsService {
 
 
     @Override
-    public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserAuthDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username +  " no such user"));
-        return new CustomUserDetails(user);
+        return new UserAuthDetails(user);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CustomUserDetails implements OAuth2User, UserDetails {
+public class UserAuthDetails implements OAuth2User, UserDetails {
     private Long id;
     private final String username;
     private final String password;
@@ -16,14 +16,14 @@ public class CustomUserDetails implements OAuth2User, UserDetails {
     private final List<GrantedAuthority> authority;
     private Map<String, Object> attributes;
 
-    public CustomUserDetails(User user){
+    public UserAuthDetails(User user){
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.active = user.isActive();
         this.authority = Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    public CustomUserDetails(Long id, String username, String password, List<GrantedAuthority> authority) {
+    public UserAuthDetails(Long id, String username, String password, List<GrantedAuthority> authority) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -74,11 +74,11 @@ public class CustomUserDetails implements OAuth2User, UserDetails {
         this.attributes = attributes;
     }
 
-    public static CustomUserDetails create(User user) {
+    public static UserAuthDetails create(User user) {
         List<GrantedAuthority> authorities = Collections.
                 singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
-        return new CustomUserDetails(
+        return new UserAuthDetails(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
@@ -86,8 +86,8 @@ public class CustomUserDetails implements OAuth2User, UserDetails {
         );
     }
 
-    public static CustomUserDetails create(User user, Map<String, Object> attributes) {
-        CustomUserDetails userPrincipal = CustomUserDetails.create(user);
+    public static UserAuthDetails create(User user, Map<String, Object> attributes) {
+        UserAuthDetails userPrincipal = UserAuthDetails.create(user);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
     }
