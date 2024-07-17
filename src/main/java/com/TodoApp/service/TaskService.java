@@ -5,7 +5,6 @@ import com.TodoApp.model.Task;
 import com.TodoApp.repository.TaskRepository;
 import com.TodoApp.model.Step;
 import com.TodoApp.repository.StepRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,17 +39,17 @@ public class TaskService {
     }
     public Step addStep(Long taskId, Step step){
         Optional<Task> task = getTaskById(taskId);
-        if (task.isEmpty())throw new RuntimeException("no task with this id");
+        task.orElseThrow();
         step.setTask(task.get());
         return stepRepository.save(step);
+    }
+    public Optional<Step> getStepById(Long stepId){
+        return stepRepository.findById(stepId);
     }
     public List<Step> getSteps(Long taskId){
         return stepRepository.findByTaskId(taskId);
     }
-    public void deleteStep(Long taskId, Long stepId){
-        Optional<Task> task = getTaskById(taskId);
-        Optional<Step> step = stepRepository.findById(stepId);
-        if (task.isEmpty() || step.isEmpty()) return;
+    public void deleteStep( Long stepId){
         stepRepository.deleteById(stepId);
     }
 }

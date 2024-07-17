@@ -3,7 +3,6 @@ package com.TodoApp.controller;
 import com.TodoApp.model.Step;
 import com.TodoApp.model.Task;
 import com.TodoApp.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.Optional;
 @RequestMapping("/api/todo")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks(){
@@ -24,7 +26,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id){
+    public ResponseEntity<Task> getTask(@PathVariable Long id){
         return taskService.getTaskById(id).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
 
@@ -38,7 +40,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
+    public ResponseEntity<Task> addTask(@RequestBody Task task){
         return new ResponseEntity<>(taskService.createOrUpdateTask(task), HttpStatus.CREATED);
     }
 
@@ -54,15 +56,22 @@ public class TaskController {
         task.setId(id);
         return ResponseEntity.ok(taskService.createOrUpdateTask(task));
     }
+    @PutMapping("{taskId}/steps/{stepId}")
+    public ResponseEntity<Step> updateStep(@PathVariable Long taskId, @PathVariable Long stepId, @RequestBody Step step){
+        Optional<Step> old = taskService.getStepById(stepId);
+        if (old.isEmpty()) return ResponseEntity.notFound().build();
+        step.setId(stepId);
+        return ResponseEntity.ok(taskService.addStep(taskId, step));
+    }
 
-    @DeleteMapping("/{taskId}/steps/{stepId}")
-    public ResponseEntity<Void> deleteStep(@PathVariable Long taskId, @PathVariable Long stepId){
-        taskService.deleteStep(taskId, stepId);
+    @DeleteMapping("/steps/{stepId}")
+    public ResponseEntity<Void> deleteStep(@PathVariable Long stepId){
+        taskService.deleteStep( stepId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
         taskService.deleteTaskById(id);
         return ResponseEntity.noContent().build();
     }
