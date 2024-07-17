@@ -27,14 +27,14 @@ public class UserService {
         return res.orElse(null);
     }
 
-    public Long addUser(User User){
+    public User addUser(User User){
         User newUser = userRepository.save(User);
-        return newUser.getId();
+        return newUser;
     }
 
-    public void updateUser(Long id, User User){
+    public User updateUser(Long id, User User){
         User.setId(id);
-        userRepository.save(User);
+        return userRepository.save(User);
     }
 
     public void deleteUser(Long id){
