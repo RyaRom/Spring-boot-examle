@@ -1,6 +1,6 @@
-package com.example.TodoDemo.repository;
+package com.TodoApp.repository;
 
-import com.example.TodoDemo.model.Task;
+import com.TodoApp.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
