@@ -1,6 +1,6 @@
 package com.TodoApp.controller;
 
-import com.TodoApp.Utils.JWTUtil;
+import com.TodoApp.utils.JWTUtil;
 import com.TodoApp.model.AuthRequest;
 import com.TodoApp.model.AuthResponse;
 import com.TodoApp.model.User;
@@ -50,7 +50,7 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
     @PostMapping("/register")
-    public ResponseEntity<?> register (@RequestBody User user){
+    public ResponseEntity<User> register (@RequestBody User user){
         user.setPassword(getPasswordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(userService.addUser(user));
     }

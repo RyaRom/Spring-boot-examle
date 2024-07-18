@@ -1,6 +1,5 @@
-package com.TodoApp.Filters;
+package com.TodoApp.utils;
 
-import com.TodoApp.Utils.JWTUtil;
 import com.TodoApp.model.UserAuthDetails;
 import com.TodoApp.service.UserAuthDetailsService;
 import jakarta.servlet.FilterChain;
