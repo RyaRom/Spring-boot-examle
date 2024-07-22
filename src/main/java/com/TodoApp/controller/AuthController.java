@@ -52,6 +52,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<User> register (@RequestBody User user){
         user.setPassword(getPasswordEncoder.encode(user.getPassword()));
+        userService.addUser(user);
         return ResponseEntity.ok(userService.addUser(user));
     }
 }
