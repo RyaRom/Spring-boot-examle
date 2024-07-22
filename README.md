@@ -2,7 +2,7 @@
 
 ## API Documentation
 
-You can view the API documentation in the [openapi.yaml](./openapi.yaml) file.
+You can view the API documentation in the [openapi](src/main/resources/application.yaml) file.
 
 ## Overview
 
