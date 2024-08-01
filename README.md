@@ -2,7 +2,7 @@
 
 ## API Documentation
 
-You can view the API documentation in the [openapi](src/main/resources/application.yaml) file.
+You can view the API documentation [here](https://app.swaggerhub.com/apis/riabikinroman/TodoAPI/1.0.0).
 
 ## Overview
 
