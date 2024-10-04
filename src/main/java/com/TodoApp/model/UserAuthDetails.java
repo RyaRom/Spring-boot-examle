@@ -5,18 +5,27 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserAuthDetails implements OAuth2User, UserDetails {
-    private Long id;
     private final String username;
+
     private final String password;
-    private boolean active;
+
     private final List<GrantedAuthority> authority;
+
+    private Long id;
+
+    private boolean active;
+
     private Map<String, Object> attributes;
 
-    public UserAuthDetails(User user){
+    public UserAuthDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.active = user.isActive();
@@ -30,9 +39,31 @@ public class UserAuthDetails implements OAuth2User, UserDetails {
         this.authority = authority;
     }
 
+    public static UserAuthDetails create(User user) {
+        List<GrantedAuthority> authorities = Collections.
+                singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+
+        return new UserAuthDetails(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
+    }
+
+    public static UserAuthDetails create(User user, Map<String, Object> attributes) {
+        UserAuthDetails userPrincipal = UserAuthDetails.create(user);
+        userPrincipal.setAttributes(attributes);
+        return userPrincipal;
+    }
+
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     @Override
@@ -68,28 +99,6 @@ public class UserAuthDetails implements OAuth2User, UserDetails {
     @Override
     public boolean isEnabled() {
         return active;
-    }
-
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
-    }
-
-    public static UserAuthDetails create(User user) {
-        List<GrantedAuthority> authorities = Collections.
-                singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-
-        return new UserAuthDetails(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                authorities
-        );
-    }
-
-    public static UserAuthDetails create(User user, Map<String, Object> attributes) {
-        UserAuthDetails userPrincipal = UserAuthDetails.create(user);
-        userPrincipal.setAttributes(attributes);
-        return userPrincipal;
     }
 
     @Override

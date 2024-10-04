@@ -18,26 +18,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return new ArrayList<User>(userRepository.findAll());
     }
 
-    public User getUser(Long id){
+    public User getUser(Long id) {
         Optional<User> res = userRepository.findById(id);
         return res.orElse(null);
     }
 
-    public User addUser(User User){
+    public User addUser(User User) {
         User newUser = userRepository.save(User);
         return newUser;
     }
 
-    public User updateUser(Long id, User User){
+    public User updateUser(Long id, User User) {
         User.setId(id);
         return userRepository.save(User);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
         userRepository.delete(getUser(id));
     }
 }

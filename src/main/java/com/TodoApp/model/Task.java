@@ -1,7 +1,14 @@
 package com.TodoApp.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,9 +19,13 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
+
     private String description;
+
     private boolean completed;
+
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Step> steps;
@@ -23,7 +34,8 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Task(){}
+    public Task() {
+    }
 
     @Override
     public boolean equals(Object o) {

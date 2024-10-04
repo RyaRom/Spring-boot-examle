@@ -6,11 +6,11 @@ public class AuthResponse {
     public AuthResponse() {
     }
 
-    public String getJwt() {
-        return jwt;
-    }
-
     public AuthResponse(String jwt) {
         this.jwt = jwt;
+    }
+
+    public String getJwt() {
+        return jwt;
     }
 }
